@@ -1,0 +1,546 @@
+<title>Mohd Athar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: colourful 3D portfolio. Hero pairs a tilting 3D shop-site mockup with floating WebGL shapes; service rows with chunky icon tiles; tilt-on-hover project cards; gradient contact panel. */
+:root {
+  --bg: #F5F6FB;
+  --surface: #FFFFFF;
+  --ink: #0F1630;
+  --muted: #55607A;
+  --line: #DCE0EE;
+  --soft: #ECEFFB;
+  --c1: #4F46E5;
+  --c2: #DB2777;
+  --c3: #EA580C;
+  --c4: #0D9488;
+  --mark: #F2B01E;
+  --blob1: rgba(99, 102, 241, 0.20);
+  --blob2: rgba(236, 72, 153, 0.16);
+  --blob3: rgba(251, 146, 60, 0.16);
+  --g1: linear-gradient(135deg, #4F46E5, #8B5CF6);
+  --g2: linear-gradient(135deg, #0D9488, #22C55E);
+  --g3: linear-gradient(135deg, #DB2777, #F97316);
+  --g4: linear-gradient(135deg, #2563EB, #06B6D4);
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0A0F22; --surface: #131A33; --ink: #EEF1FB; --muted: #A2ADC9; --line: #26305A; --soft: #1A2342;
+    --c1: #8E96FF; --c2: #FF74AE; --c3: #FFA462; --c4: #3DD6C6;
+    --blob1: rgba(99, 102, 241, 0.30); --blob2: rgba(236, 72, 153, 0.20); --blob3: rgba(251, 146, 60, 0.14);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0A0F22; --surface: #131A33; --ink: #EEF1FB; --muted: #A2ADC9; --line: #26305A; --soft: #1A2342;
+  --c1: #8E96FF; --c2: #FF74AE; --c3: #FFA462; --c4: #3DD6C6;
+  --blob1: rgba(99, 102, 241, 0.30); --blob2: rgba(236, 72, 153, 0.20); --blob3: rgba(251, 146, 60, 0.14);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--c1); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1080px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+.label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c1); }
+
+/* header */
+header.top { display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center; justify-content: space-between; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 700; font-size: 19px; text-decoration: none; }
+.mono { width: 40px; height: 40px; border-radius: 12px; background: var(--g1); color: #fff; display: grid; place-items: center; font-size: 15px; box-shadow: 0 4px 0 #3730A3, 0 10px 16px -8px rgba(79, 70, 229, 0.7); }
+nav { display: flex; flex-wrap: wrap; gap: 6px 26px; font-size: 15px; font-weight: 600; }
+nav a { text-decoration: none; color: var(--muted); padding-block: 4px; border-bottom: 2px solid transparent; }
+nav a:hover { color: var(--ink); border-bottom-color: var(--c2); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 40px; align-items: center; padding-block: 40px 72px; background: radial-gradient(520px 340px at 88% 18%, var(--blob1), transparent 70%), radial-gradient(420px 300px at 70% 95%, var(--blob2), transparent 70%), radial-gradient(380px 260px at 4% 90%, var(--blob3), transparent 70%); border-radius: 28px; }
+.hero h1 { font-size: clamp(36px, 5.6vw, 62px); font-weight: 800; margin-top: 18px; }
+.hero h1 span { background: linear-gradient(90deg, var(--c1), var(--c2) 55%, var(--c3)); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 0.08em; }
+.hero .lead { margin-top: 22px; font-size: 19px; color: var(--muted); max-width: 52ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.btn { display: inline-block; padding: 13px 24px; border-radius: 12px; font-weight: 600; font-size: 16px; text-decoration: none; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); box-shadow: 0 5px 0 var(--ink); transition: transform 0.12s, box-shadow 0.12s; }
+.btn.primary { background: var(--g1); border-color: transparent; color: #fff; box-shadow: 0 5px 0 #3730A3, 0 16px 24px -12px rgba(79, 70, 229, 0.8); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+.btn.primary:active { box-shadow: 0 1px 0 #3730A3; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 38px; padding: 0; list-style: none; font-size: 15px; color: var(--muted); }
+.facts li::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 9px; background: var(--c2); }
+.facts li:nth-child(2)::before { background: var(--mark); }
+.facts li:nth-child(3)::before { background: var(--c4); }
+
+/* 3D stage */
+.stage { position: relative; min-height: 480px; display: grid; place-items: center; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.float { position: relative; width: min(100%, 330px); }
+.tilt { transform: perspective(1200px) rotateY(var(--ry, -14deg)) rotateX(var(--rx, 6deg)); transform-style: preserve-3d; transition: transform 0.25s ease-out; }
+.browser { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; transform-style: preserve-3d; box-shadow: 18px 26px 44px -20px rgba(30, 20, 90, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04); }
+.bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--soft); border-radius: 15px 15px 0 0; }
+.bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--c2); }
+.bar i:nth-child(2) { background: var(--mark); }
+.bar i:nth-child(3) { background: var(--c4); }
+.bar .url { margin-left: 10px; flex: 1; min-width: 0; font-family: var(--font-mono); font-size: 11px; color: var(--muted); background: var(--surface); border-radius: 6px; padding: 4px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.site { padding: 16px; display: grid; gap: 12px; transform-style: preserve-3d; }
+.site .sh { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.site .sn { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+.site .pill { font-size: 11px; font-weight: 600; background: var(--mark); color: #1b1300; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.site .banner { border-radius: 12px; padding: 16px; background: var(--g1); color: #fff; transform: translateZ(26px); box-shadow: 0 14px 20px -12px rgba(79, 70, 229, 0.8); }
+.site .banner b { font-family: var(--font-display); font-size: 19px; display: block; line-height: 1.15; }
+.site .banner small { display: block; margin-top: 6px; opacity: 0.9; font-size: 13px; }
+.items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; transform: translateZ(16px); }
+.item { border: 1px solid var(--line); border-radius: 10px; padding: 8px; font-size: 12px; background: var(--surface); }
+.item .ph { aspect-ratio: 4 / 3; border-radius: 6px; margin-bottom: 7px; background: var(--g3); }
+.item:nth-child(2) .ph { background: var(--g2); }
+.item:nth-child(3) .ph { background: var(--g4); }
+.item b { display: block; font-weight: 600; }
+.item span { color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+.site .order { display: block; text-align: center; font-weight: 600; font-size: 14px; background: #16A34A; color: #fff; padding: 11px; border-radius: 10px; transform: translateZ(40px); box-shadow: 0 4px 0 #0F7A37, 0 14px 18px -10px rgba(22, 163, 74, 0.8); }
+.concept-note { margin-top: 14px; font-size: 13px; color: var(--muted); text-align: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .float { animation: bob 6s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(8px); } }
+}
+
+/* sections */
+section { padding-block: 64px; border-top: 1px solid var(--line); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 24px 48px; margin-bottom: 36px; align-items: end; }
+.sec-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin-top: 10px; }
+.sec-head p { color: var(--muted); max-width: 56ch; }
+
+/* services */
+.rows { display: grid; gap: 16px; }
+.row { display: grid; grid-template-columns: 64px minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 8px 28px; align-items: center; padding: 20px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; transition: transform 0.18s, box-shadow 0.18s; }
+.row:hover { transform: translateY(-4px); box-shadow: 0 18px 30px -22px rgba(30, 20, 90, 0.6); }
+.row h3 { font-size: 22px; font-weight: 700; }
+.row p { color: var(--muted); max-width: 58ch; }
+.ico { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; color: #fff; background: var(--g1); box-shadow: 0 6px 0 var(--shade, #3730A3), 0 14px 18px -10px rgba(0, 0, 0, 0.35); }
+.ico svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ico.i2 { background: var(--g3); --shade: #A61B52; }
+.ico.i3 { background: var(--g2); --shade: #0A6F66; }
+.ico.i4 { background: var(--g4); --shade: #1B46A8; }
+
+/* work */
+.work { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; perspective: 1200px; }
+.proj { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; display: flex; flex-direction: column; transform-style: preserve-3d; transition: transform 0.35s ease-out, box-shadow 0.35s; will-change: transform; }
+.proj.live { transition: transform 0.08s linear, box-shadow 0.35s; box-shadow: 0 30px 40px -28px rgba(30, 20, 90, 0.7); }
+.shot { aspect-ratio: 16 / 9; display: grid; place-items: center; border-bottom: 1px solid var(--line); border-radius: 17px 17px 0 0; transform-style: preserve-3d; }
+.shot > div { transform: translateZ(38px); box-shadow: 0 18px 24px -14px rgba(0, 0, 0, 0.45); }
+.proj:nth-child(1) .shot { background: var(--g1); }
+.proj:nth-child(2) .shot { background: var(--g2); }
+.proj:nth-child(3) .shot { background: var(--g3); }
+.proj:nth-child(4) .shot { background: var(--g4); }
+.proj:nth-child(5) .shot { background: var(--g2); }
+.proj .body .btn { justify-self: start; margin-top: 8px; }
+.proj .body { padding: 22px; display: grid; gap: 10px; align-content: start; flex: 1; }
+.proj h3 { font-size: 21px; font-weight: 700; }
+.proj p { color: var(--muted); font-size: 16px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 4px 0 0; list-style: none; }
+.tags li { font-family: var(--font-mono); font-size: 11px; color: var(--ink); background: var(--soft); border-radius: 999px; padding: 4px 10px; }
+.badge { justify-self: start; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c2); }
+
+/* mini mockups */
+.m-dash { width: 74%; background: var(--surface); border-radius: 10px; padding: 12px; display: grid; gap: 8px; }
+.m-dash .h { display: flex; gap: 6px; }
+.m-dash .h span { flex: 1; height: 14px; border-radius: 4px; background: var(--c1); }
+.m-dash .h span:first-child { flex: 2; }
+.m-dash .h span:nth-child(2) { background: var(--c2); }
+.m-dash .h span:nth-child(3) { background: var(--mark); }
+.m-dash .r { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 6px; }
+.m-dash .r i { height: 8px; border-radius: 4px; background: var(--line); }
+.m-cat { width: 62%; background: var(--surface); border-radius: 10px; padding: 12px; display: grid; gap: 7px; }
+.m-cat .l { height: 8px; border-radius: 4px; background: var(--line); }
+.m-cat .l.s { width: 55%; }
+.m-cat .g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.m-cat .g div { aspect-ratio: 1; border-radius: 5px; background: var(--g3); }
+.m-cat .g div:nth-child(2n) { background: var(--g1); }
+.m-cat .g div:nth-child(3n) { background: var(--g4); }
+.m-cat .w { height: 16px; border-radius: 5px; background: #16A34A; }
+.m-shop { width: 62%; display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; box-shadow: none !important; }
+.m-shop div { border-radius: 10px; background: var(--surface); aspect-ratio: 3 / 4; }
+.m-shop div:first-child { background: var(--g1); grid-row: span 2; aspect-ratio: auto; }
+.m-shop div:nth-child(2) { aspect-ratio: 4 / 3; background: var(--mark); }
+.m-phone { height: 82%; aspect-ratio: 9 / 17; border-radius: 18px; border: 3px solid var(--ink); background: var(--surface); padding: 10px 8px; display: grid; gap: 6px; align-content: start; }
+.m-phone .l { height: 6px; border-radius: 3px; background: var(--line); }
+.m-phone .k { height: 22px; border-radius: 6px; background: var(--soft); }
+.m-phone .k:nth-child(2) { background: var(--c1); opacity: 0.85; }
+.m-phone .w { height: 14px; border-radius: 5px; background: var(--c2); margin-top: auto; }
+
+/* process */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; padding: 0; margin: 0; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: #fff; font-family: var(--font-display); font-weight: 700; background: var(--g1); box-shadow: 0 4px 0 #3730A3; }
+.steps li:nth-child(2)::before { background: var(--g3); box-shadow: 0 4px 0 #A61B52; }
+.steps li:nth-child(3)::before { background: var(--g2); box-shadow: 0 4px 0 #0A6F66; }
+.steps li:nth-child(4)::before { background: var(--g4); box-shadow: 0 4px 0 #1B46A8; }
+.steps h3 { font-size: 20px; margin: 16px 0 8px; font-weight: 700; }
+.steps p { color: var(--muted); font-size: 16px; }
+
+/* skills */
+.skills { display: flex; flex-wrap: wrap; gap: 14px; padding: 0; margin: 0; list-style: none; }
+.skills li { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 20px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 0 var(--line); display: flex; align-items: center; gap: 10px; transition: transform 0.12s, box-shadow 0.12s; }
+.skills li:hover { transform: translateY(-3px); box-shadow: 0 7px 0 var(--line); }
+.skills li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c1); }
+.skills li:nth-child(2)::before { background: var(--mark); }
+.skills li:nth-child(3)::before { background: #38BDF8; }
+.skills li:nth-child(4)::before { background: #22C55E; }
+.skills li:nth-child(5)::before { background: var(--c2); }
+.skills li:nth-child(6)::before { background: var(--c3); }
+.skills li:nth-child(7)::before { background: var(--c4); }
+
+/* contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 32px 48px; align-items: center; padding: 44px; border-radius: 28px; background: linear-gradient(135deg, #4338CA, #7C3AED 45%, #DB2777); color: #fff; box-shadow: 0 10px 0 #2E2790, 0 30px 40px -24px rgba(67, 56, 202, 0.9); }
+.contact .label { color: rgba(255, 255, 255, 0.85); }
+.contact h2 { font-size: clamp(30px, 4.6vw, 46px); font-weight: 800; margin-top: 10px; }
+.contact .lead { margin-top: 16px; color: rgba(255, 255, 255, 0.92); max-width: 46ch; }
+.details { display: grid; margin: 0; background: var(--surface); color: var(--ink); border-radius: 18px; box-shadow: 0 8px 0 rgba(0, 0, 0, 0.18); }
+.details div { padding: 16px 22px; border-top: 1px solid var(--line); min-width: 0; }
+.details div:first-child { border-top: 0; }
+.details dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.details dd { margin: 4px 0 0; font-weight: 600; font-size: 18px; overflow-wrap: anywhere; user-select: all; }
+#contact { border-top: 0; }
+
+footer { padding-block: 28px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .hero, .sec-head, .contact { grid-template-columns: minmax(0, 1fr); }
+  .hero { gap: 28px; padding-block: 28px 44px; }
+  .row { grid-template-columns: 64px minmax(0, 1fr); }
+  .row p { grid-column: 1 / -1; }
+  .work { grid-template-columns: minmax(0, 1fr); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  section { padding-block: 48px; }
+  .contact { padding: 28px 22px; }
+}
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .stage { min-height: 440px; }
+  .float { width: min(78%, 300px); }
+  .row { padding: 18px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" aria-label="Mohd Athar, home"><span class="mono">MA</span>Mohd Athar</a>
+    <nav aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <p class="label">Web developer and designer</p>
+        <h1>Websites and apps that bring local shops <span>more customers.</span></h1>
+        <p class="lead">I design and build fast, mobile-friendly websites and simple apps for shops and small businesses, from product catalogues to online ordering.</p>
+        <div class="actions">
+          <a class="btn primary" href="#work">See my work</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+        <ul class="facts">
+          <li>Mobile-first design</li>
+          <li>Fast loading pages</li>
+          <li>Easy for you to update</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="stage" id="stage">
+          <canvas id="gl" aria-hidden="true"></canvas>
+          <div class="float">
+            <div class="tilt" id="tilt">
+              <div class="browser" role="img" aria-label="Concept design of a neighbourhood shop website with a product catalogue and an order button">
+                <div class="bar"><i></i><i></i><i></i><span class="url">neighbourhoodstore.in</span></div>
+                <div class="site">
+                  <div class="sh"><span class="sn">Neighbourhood Store</span><span class="pill">Open till 10 pm</span></div>
+                  <div class="banner"><b>Fresh groceries, delivered to your door</b><small>Order on WhatsApp in under a minute</small></div>
+                  <div class="items">
+                    <div class="item"><div class="ph"></div><b>Basmati rice</b><span>₹ 120 / kg</span></div>
+                    <div class="item"><div class="ph"></div><b>Toor dal</b><span>₹ 160 / kg</span></div>
+                    <div class="item"><div class="ph"></div><b>Mustard oil</b><span>₹ 185 / L</span></div>
+                  </div>
+                  <span class="order">Order on WhatsApp</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="concept-note">Concept design for a neighbourhood grocery store.</p>
+      </div>
+    </div>
+
+    <section id="services">
+      <div class="sec-head">
+        <div>
+          <p class="label">Services</p>
+          <h2>What I build for shops and small businesses</h2>
+        </div>
+        <p>Most shop owners need the same thing: be easy to find, show what they sell, and make it simple for customers to order or visit.</p>
+      </div>
+      <div class="rows">
+        <div class="row">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/><path d="M7 14h6"/></svg></span>
+          <h3>Shop websites</h3>
+          <p>A clear site with your products, prices, opening hours, location and a tap-to-call button, so customers find you and walk in.</p>
+        </div>
+        <div class="row">
+          <span class="ico i2" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 8h12l1 12H5L6 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></span>
+          <h3>Online ordering</h3>
+          <p>Ordering that fits how your customers already buy: WhatsApp orders, UPI payment details and a catalogue that works well on a phone.</p>
+        </div>
+        <div class="row">
+          <span class="ico i3" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+          <h3>Mobile apps</h3>
+          <p>Simple apps for the jobs that eat your day, such as billing, stock tracking and managing customer orders.</p>
+        </div>
+        <div class="row">
+          <span class="ico i4" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/><path d="M14 7l3 3"/></svg></span>
+          <h3>Web design</h3>
+          <p>Clean, consistent layouts, colours and typography that match your shop and look right on every screen size.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="sec-head">
+        <div>
+          <p class="label">Selected work</p>
+          <h2>Projects</h2>
+        </div>
+        <p>A full-stack project built with the MERN stack, plus concept projects that show how I approach common shop needs.</p>
+      </div>
+      <div class="work">
+        <article class="proj">
+          <div class="shot"><div class="m-dash"><div class="h"><span></span><span></span><span></span></div><div class="r"><i></i><i></i><i></i></div><div class="r"><i></i><i></i><i></i></div><div class="r"><i></i><i></i><i></i></div><div class="r"><i></i><i></i><i></i></div></div></div>
+          <div class="body">
+            <span class="badge">Project · Web app</span>
+            <h3>Student Management System</h3>
+            <p>A full-stack web app for managing student records, built with the MERN stack.</p>
+            <ul class="tags"><li>MongoDB</li><li>Express</li><li>React</li><li>Node.js</li></ul>
+          </div>
+        </article>
+        <article class="proj">
+          <div class="shot"><div class="m-cat"><div class="l"></div><div class="l s"></div><div class="g"><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="w"></div></div></div>
+          <div class="body">
+            <span class="badge">Concept · Website</span>
+            <h3>Grocery catalogue with WhatsApp ordering</h3>
+            <p>A product catalogue with prices in rupees and a one-tap order button that sends the cart to the shop on WhatsApp.</p>
+            <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+          </div>
+        </article>
+        <article class="proj">
+          <div class="shot"><div class="m-shop"><div></div><div></div><div></div></div></div>
+          <div class="body">
+            <span class="badge">Concept · Website</span>
+            <h3>Clothing boutique storefront</h3>
+            <p>An image-led storefront with collections, size guides and a simple enquiry flow for customers who want to visit the store.</p>
+            <ul class="tags"><li>UI design</li><li>Responsive</li><li>SEO basics</li></ul>
+          </div>
+        </article>
+        <article class="proj">
+          <div class="shot"><div class="m-phone"><div class="l"></div><div class="k"></div><div class="k"></div><div class="k"></div><div class="w"></div></div></div>
+          <div class="body">
+            <span class="badge">Concept · App</span>
+            <h3>Billing and stock app for small shops</h3>
+            <p>A phone app to create bills, track what is running low and see the day's sales at a glance.</p>
+            <ul class="tags"><li>App design</li><li>Mobile UI</li><li>Dashboard</li></ul>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="shot"><div class="m-phone"><div class="l"></div><div class="k"></div><div class="k"></div><div class="k"></div><div class="w"></div></div></div>
+          <div class="body">
+            <span class="badge">Concept · Website</span>
+            <h3>FixPoint repair booking website</h3>
+            <p>A responsive phone and laptop repair website with service filters, sample cost estimates and a booking form with WhatsApp handoff.</p>
+            <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive UI</li></ul>
+            <a class="btn primary" href="fixpoint-repair-booking.html" target="_blank" rel="noopener">View live demo ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="sec-head">
+        <div>
+          <p class="label">How I work</p>
+          <h2>From first call to launch</h2>
+        </div>
+        <p>A short, clear process so you always know what happens next and what it will look like before it goes live.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Talk</h3><p>We discuss your shop, your customers and what you want the site or app to do.</p></li>
+        <li><h3>Design</h3><p>I share a design for your approval, so changes happen before any code is written.</p></li>
+        <li><h3>Build</h3><p>I build it for phones first, test it on different screens and keep it fast.</p></li>
+        <li><h3>Launch and support</h3><p>I put it live, show you how to update it and stay available for changes.</p></li>
+      </ol>
+    </section>
+
+    <section id="skills">
+      <div class="sec-head">
+        <div>
+          <p class="label">Skills</p>
+          <h2>Tools and strengths</h2>
+        </div>
+      </div>
+      <ul class="skills">
+        <li>HTML and CSS</li>
+        <li>JavaScript</li>
+        <li>React</li>
+        <li>MERN stack</li>
+        <li>Responsive design</li>
+        <li>UI design</li>
+        <li>Website performance</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <div class="contact">
+        <div>
+          <p class="label">Contact</p>
+          <h2>Have a shop that needs a website or app?</h2>
+          <p class="lead">Tell me about your business and what you need. I will reply with ideas and a clear price.</p>
+        </div>
+        <dl class="details">
+          <div><dt>Email</dt><dd>md.athar1777@gmail.com</dd></div>
+          <div><dt>Phone / WhatsApp</dt><dd>+91 93557 51065</dd></div>
+          <div><dt>Based in</dt><dd>Ghaziabad, India · Also working remotely</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Mohd Athar</span>
+    <span>Web developer and designer</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var mx = 0, my = 0;
+
+  /* Hero mockup tilt follows the pointer */
+  var stage = document.getElementById('stage');
+  var tiltEl = document.getElementById('tilt');
+  if (stage && tiltEl && !reduce) {
+    stage.addEventListener('pointermove', function (e) {
+      var r = stage.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width - 0.5;
+      my = (e.clientY - r.top) / r.height - 0.5;
+      tiltEl.style.setProperty('--ry', (-14 + mx * 26) + 'deg');
+      tiltEl.style.setProperty('--rx', (6 - my * 18) + 'deg');
+    });
+    stage.addEventListener('pointerleave', function () {
+      mx = 0; my = 0;
+      tiltEl.style.removeProperty('--ry');
+      tiltEl.style.removeProperty('--rx');
+    });
+  }
+
+  /* Project cards tilt on hover */
+  if (fine && !reduce) {
+    Array.prototype.forEach.call(document.querySelectorAll('.proj'), function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        card.classList.add('live');
+        card.style.transform = 'perspective(1000px) rotateX(' + (-py * 9).toFixed(2) + 'deg) rotateY(' + (px * 11).toFixed(2) + 'deg) translateY(-4px)';
+      });
+      card.addEventListener('pointerleave', function () {
+        card.classList.remove('live');
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* Floating 3D shapes behind the hero mockup */
+  var canvas = document.getElementById('gl');
+  if (!canvas || !window.THREE) { if (canvas) canvas.hidden = true; return; }
+  try {
+    var T = window.THREE;
+    var renderer = new T.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    var scene = new T.Scene();
+    var camera = new T.PerspectiveCamera(40, 1, 0.1, 100);
+    scene.add(new T.AmbientLight(0xffffff, 0.8));
+    var key = new T.DirectionalLight(0xffffff, 1.0); key.position.set(4, 5, 6); scene.add(key);
+    var rim = new T.PointLight(0xff5fa2, 1.3, 40); rim.position.set(-5, -3, 4); scene.add(rim);
+    var fill = new T.PointLight(0x4f8bff, 1.1, 40); fill.position.set(5, -2, 3); scene.add(fill);
+
+    var shapes = [];
+    function add(geo, color, x, y, z, flat, spd) {
+      var m = new T.Mesh(geo, new T.MeshStandardMaterial({ color: color, roughness: 0.3, metalness: 0.15, flatShading: !!flat }));
+      m.position.set(x, y, z);
+      m.userData = { y: y, ph: Math.random() * 6.28, spd: spd || 1 };
+      scene.add(m); shapes.push(m);
+    }
+    add(new T.TorusKnotGeometry(0.62, 0.2, 100, 16), 0x5b5bf0, -3.0, 2.0, -1.0, false, 1);
+    add(new T.IcosahedronGeometry(0.85, 0), 0xf0508c, 3.0, 2.1, -1.5, true, 0.8);
+    add(new T.SphereGeometry(0.62, 32, 24), 0xff8a3d, 2.9, -2.0, -0.6, false, 1);
+    add(new T.TorusGeometry(0.7, 0.24, 16, 48), 0x14b8a6, -2.9, -2.0, -0.6, false, 1.2);
+    add(new T.OctahedronGeometry(0.6, 0), 0xf2b01e, 0.3, 3.1, -2.2, true, 1.1);
+    add(new T.BoxGeometry(0.7, 0.7, 0.7), 0x8b5cf6, -0.3, -3.1, -1.4, true, 0.9);
+
+    function resize() {
+      var w = canvas.clientWidth, h = canvas.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.position.z = Math.max(9.5, 10.8 / camera.aspect);
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas); else window.addEventListener('resize', resize);
+
+    var t0 = performance.now(), raf = 0;
+    function frame(now) {
+      var t = ((now || performance.now()) - t0) / 1000;
+      for (var i = 0; i < shapes.length; i++) {
+        var m = shapes[i], d = m.userData;
+        m.rotation.x = t * 0.4 * d.spd + i;
+        m.rotation.y = t * 0.55 * d.spd;
+        m.position.y = d.y + Math.sin(t * 0.9 + d.ph) * 0.18;
+      }
+      scene.rotation.y += (mx * 0.4 - scene.rotation.y) * 0.05;
+      scene.rotation.x += (my * 0.25 - scene.rotation.x) * 0.05;
+      renderer.render(scene, camera);
+      if (!reduce) raf = requestAnimationFrame(frame);
+    }
+    if (reduce) { frame(); } else {
+      var visible = true;
+      var start = function () { if (!raf) raf = requestAnimationFrame(frame); };
+      var stop = function () { if (raf) { cancelAnimationFrame(raf); raf = 0; } };
+      if (window.IntersectionObserver) {
+        new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(canvas);
+      } else { start(); }
+      document.addEventListener('visibilitychange', function () { document.hidden ? stop() : (visible && start()); });
+      start();
+    }
+  } catch (err) {
+    canvas.hidden = true;
+  }
+})();
+</script>

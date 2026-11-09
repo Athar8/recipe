@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FixPoint phone and laptop repair service demo website with service estimates and booking requests.">
+  <title>FixPoint — Device Repair, Made Simple</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #121d30;
+      --panel-2: #17243a;
+      --ink: #f4f7fb;
+      --muted: #a8b4c7;
+      --line: rgba(208, 222, 242, .13);
+      --lime: #c8f169;
+      --blue: #85b8ff;
+      --radius: 22px;
+      --shadow: 0 24px 70px rgba(0,0,0,.28);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--ink); background:
+        radial-gradient(700px 420px at 85% 8%, rgba(133,184,255,.13), transparent 65%),
+        radial-gradient(600px 420px at 4% 42%, rgba(200,241,105,.08), transparent 68%),
+        var(--bg);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:24px 0; }
+    .brand { display:flex; align-items:center; gap:11px; font-weight:850; letter-spacing:-.04em; font-size:20px; }
+    .brand-mark { width:40px; height:40px; display:grid; place-items:center; border-radius:13px; background:var(--lime); color:#14200b; font-weight:950; }
+    nav { display:flex; gap:25px; color:var(--muted); font-size:14px; font-weight:650; }
+    nav a:hover { color:var(--lime); }
+    .top-cta { padding:10px 16px; border:1px solid var(--line); border-radius:999px; font-size:14px; font-weight:750; }
+    .top-cta:hover { border-color:var(--lime); color:var(--lime); }
+    .hero { display:grid; grid-template-columns:1.06fr .94fr; align-items:center; gap:54px; padding:70px 0 86px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:9px; padding:7px 12px; border:1px solid rgba(200,241,105,.26); border-radius:999px; color:var(--lime); background:rgba(200,241,105,.07); font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+    .dot { width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 5px rgba(200,241,105,.12); }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { margin:22px 0 18px; font-size:clamp(42px,6vw,70px); line-height:1.02; letter-spacing:-.065em; max-width:700px; }
+    h1 span { color:var(--lime); }
+    .hero-copy { max-width:570px; color:var(--muted); font-size:18px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:9px; border:1px solid var(--line); border-radius:13px; padding:13px 19px; font-weight:800; cursor:pointer; transition:.2s ease; }
+    .btn-primary { background:var(--lime); color:#14200b; border-color:var(--lime); box-shadow:0 9px 28px rgba(200,241,105,.15); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 14px 32px rgba(200,241,105,.22); }
+    .btn-ghost:hover { border-color:var(--blue); color:var(--blue); }
+    .proof { display:flex; flex-wrap:wrap; gap:22px; margin-top:36px; color:var(--muted); font-size:13px; }
+    .proof strong { display:block; color:var(--ink); font-size:17px; }
+    .hero-visual { position:relative; min-height:420px; display:grid; place-items:center; }
+    .glow { position:absolute; width:310px; height:310px; border-radius:50%; background:rgba(133,184,255,.13); filter:blur(35px); }
+    .device-card { position:relative; width:min(100%,390px); padding:24px; border:1px solid rgba(218,230,247,.17); border-radius:28px; background:linear-gradient(145deg,rgba(28,43,66,.96),rgba(15,25,42,.96)); box-shadow:var(--shadow); transform:rotate(2deg); }
+    .card-head { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:12px; }
+    .status { color:var(--lime); background:rgba(200,241,105,.1); padding:6px 10px; border-radius:99px; font-weight:800; }
+    .device-art { display:grid; place-items:center; margin:26px auto 20px; width:150px; height:190px; border:7px solid #34445d; border-radius:27px; background:linear-gradient(145deg,#1d3150,#101a2b); box-shadow:inset 0 0 0 2px rgba(255,255,255,.06),0 20px 35px rgba(0,0,0,.25); font-size:54px; }
+    .device-card h3 { margin:0; font-size:23px; letter-spacing:-.04em; }
+    .device-card p { color:var(--muted); font-size:13px; margin:5px 0 0; }
+    .progress { height:7px; background:#2b3b53; border-radius:99px; margin-top:20px; overflow:hidden; }
+    .progress span { display:block; width:72%; height:100%; background:var(--lime); border-radius:99px; }
+    .float-tag { position:absolute; right:-4px; bottom:34px; padding:13px 16px; border:1px solid var(--line); border-radius:15px; background:#17243a; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .float-tag span { color:var(--lime); }
+    section { padding:74px 0; border-top:1px solid var(--line); }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:28px; margin-bottom:30px; }
+    .kicker { color:var(--lime); font-size:12px; letter-spacing:.13em; font-weight:850; text-transform:uppercase; }
+    h2 { margin:8px 0 0; font-size:clamp(30px,4vw,44px); line-height:1.08; letter-spacing:-.05em; }
+    .section-head p { max-width:440px; color:var(--muted); margin:0; }
+    .filters { display:flex; flex-wrap:wrap; gap:9px; margin-bottom:22px; }
+    .filter { padding:9px 15px; border:1px solid var(--line); border-radius:99px; background:transparent; color:var(--muted); font-size:13px; font-weight:750; cursor:pointer; }
+    .filter.active,.filter:hover { background:var(--lime); border-color:var(--lime); color:#14200b; }
+    .service-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .service { padding:22px; border:1px solid var(--line); border-radius:19px; background:rgba(18,29,48,.84); transition:.2s ease; }
+    .service:hover { transform:translateY(-4px); border-color:rgba(200,241,105,.45); }
+    .service[hidden] { display:none; }
+    .service-icon { width:43px; height:43px; display:grid; place-items:center; border-radius:13px; background:rgba(200,241,105,.1); font-size:21px; margin-bottom:19px; }
+    .service h3 { margin:0 0 7px; font-size:18px; }
+    .service p { color:var(--muted); font-size:13px; margin:0 0 17px; }
+    .service-foot { display:flex; justify-content:space-between; align-items:center; gap:10px; padding-top:14px; border-top:1px solid var(--line); font-size:12px; color:var(--muted); }
+    .service-foot strong { color:var(--lime); font-size:14px; }
+    .booking-layout { display:grid; grid-template-columns:.82fr 1.18fr; gap:22px; align-items:start; }
+    .booking-aside { padding:27px; border:1px solid rgba(200,241,105,.2); border-radius:var(--radius); background:linear-gradient(145deg,rgba(200,241,105,.09),rgba(18,29,48,.88)); }
+    .booking-aside h3 { font-size:25px; line-height:1.15; letter-spacing:-.04em; }
+    .booking-aside p { color:var(--muted); font-size:14px; }
+    .estimate { margin-top:24px; padding:18px; border-radius:16px; background:#0b1423; border:1px solid var(--line); }
+    .estimate small { display:block; color:var(--muted); }
+    .estimate strong { display:block; color:var(--lime); font-size:30px; letter-spacing:-.04em; margin:3px 0; }
+    .estimate em { color:var(--muted); font-size:11px; font-style:normal; }
+    .form-card { padding:28px; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .field { display:grid; gap:7px; }
+    .field.full { grid-column:1/-1; }
+    label { color:#dce5f3; font-size:12px; font-weight:800; }
+    input,select,textarea { width:100%; min-width:0; color:var(--ink); background:#0b1423; border:1px solid var(--line); border-radius:11px; padding:12px 13px; outline:none; }
+    input:focus,select:focus,textarea:focus { border-color:var(--lime); box-shadow:0 0 0 3px rgba(200,241,105,.1); }
+    textarea { min-height:88px; resize:vertical; }
+    select option { background:#0b1423; }
+    .form-note { color:var(--muted); font-size:11px; margin:12px 0 18px; }
+    .form-card .btn { width:100%; }
+    .notice { display:none; margin-top:16px; padding:14px; border:1px solid rgba(200,241,105,.28); border-radius:13px; background:rgba(200,241,105,.07); color:#eaf7cf; font-size:13px; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .notice.show { display:block; }
+    .notice button { margin-top:12px; border:0; background:var(--lime); color:#14200b; padding:8px 12px; border-radius:9px; font-weight:800; cursor:pointer; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .step { padding:22px; border:1px solid var(--line); border-radius:18px; background:var(--panel); }
+    .step b { display:grid; place-items:center; width:34px; height:34px; border-radius:11px; background:var(--lime); color:#14200b; }
+    .step h3 { margin:15px 0 6px; font-size:17px; }
+    .step p { color:var(--muted); font-size:13px; margin:0; }
+    .faq { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    details { padding:18px 20px; border:1px solid var(--line); border-radius:15px; background:var(--panel); }
+    summary { cursor:pointer; font-weight:800; }
+    details p { color:var(--muted); font-size:13px; margin:12px 0 0; }
+    footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:28px 0 38px; color:var(--muted); font-size:12px; }
+    footer strong { color:var(--ink); }
+    @media (max-width:850px) {
+      .hero { grid-template-columns:1fr; gap:20px; padding-top:50px; }
+      .hero-visual { min-height:380px; }
+      .booking-layout { grid-template-columns:1fr; }
+      .section-head { display:block; }
+      .section-head p { margin-top:12px; }
+    }
+    @media (max-width:620px) {
+      .wrap { width:min(100% - 28px,1120px); }
+      nav { display:none; }
+      .topbar { padding:17px 0; }
+      .hero { padding:42px 0 58px; }
+      .hero-copy { font-size:16px; }
+      .hero-visual { min-height:340px; }
+      .device-card { width:min(88%,390px); }
+      .float-tag { right:0; bottom:14px; }
+      section { padding:56px 0; }
+      .service-grid,.steps,.faq { grid-template-columns:1fr; }
+      .form-card,.booking-aside { padding:20px; }
+      .form-grid { grid-template-columns:1fr; }
+      .field.full { grid-column:auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="brand" href="#home"><span class="brand-mark">F</span> FixPoint</a>
+      <nav aria-label="Main navigation">
+        <a href="#services">Services</a><a href="#how">How it works</a><a href="#booking">Book a repair</a>
+      </nav>
+      <a class="top-cta" href="#booking">Get an estimate ↗</a>
+    </header>
+
+    <main id="home">
+      <div class="hero">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Device care, made simple</span>
+          <h1>Your device deserves a <span>second life.</span></h1>
+          <p class="hero-copy">Fast, friendly phone and laptop repair for everyday problems. Choose a service, get a sample estimate and send a repair request in just a few clicks.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#booking">Book a repair <span>↗</span></a>
+            <a class="btn btn-ghost" href="#services">Explore services</a>
+          </div>
+          <div class="proof">
+            <div><strong>Clear estimates</strong>Know the sample cost</div>
+            <div><strong>Simple booking</strong>Request in a minute</div>
+            <div><strong>Phone-first</strong>Works on any screen</div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Illustration of a phone ready for repair">
+          <div class="glow"></div>
+          <div class="device-card">
+            <div class="card-head"><span>FIXPOINT SERVICE CARD</span><span class="status">● Ready to help</span></div>
+            <div class="device-art">📱</div>
+            <h3>Back to your best.</h3>
+            <p>Screen • Battery • Charging • Software</p>
+            <div class="progress"><span></span></div>
+          </div>
+          <div class="float-tag">Repair made <span>simple ✓</span></div>
+        </div>
+      </div>
+
+      <section id="services">
+        <div class="section-head">
+          <div><div class="kicker">What we fix</div><h2>Small problems. <br>Smart solutions.</h2></div>
+          <p>Choose a device category to explore common repair services. These are sample services and prices for this portfolio demo.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filter services">
+          <button class="filter active" type="button" data-filter="all">All services</button>
+          <button class="filter" type="button" data-filter="phone">Phones</button>
+          <button class="filter" type="button" data-filter="laptop">Laptops</button>
+        </div>
+        <div class="service-grid">
+          <article class="service" data-category="phone"><div class="service-icon">📱</div><h3>Phone screen repair</h3><p>Cracked display or touch response issues? Get your screen checked.</p><div class="service-foot"><span>Phones</span><strong>From ₹1,499</strong></div></article>
+          <article class="service" data-category="phone"><div class="service-icon">🔋</div><h3>Battery replacement</h3><p>For devices that drain quickly or struggle to hold a charge.</p><div class="service-foot"><span>Phones</span><strong>From ₹799</strong></div></article>
+          <article class="service" data-category="phone"><div class="service-icon">🔌</div><h3>Charging port check</h3><p>Help with loose connections and charging problems.</p><div class="service-foot"><span>Phones</span><strong>From ₹499</strong></div></article>
+          <article class="service" data-category="laptop"><div class="service-icon">💻</div><h3>Laptop screen repair</h3><p>Display checks for flickering, lines or a damaged screen.</p><div class="service-foot"><span>Laptops</span><strong>From ₹2,499</strong></div></article>
+          <article class="service" data-category="laptop"><div class="service-icon">⌨️</div><h3>Keyboard replacement</h3><p>Sticky, missing or unresponsive keys checked by a technician.</p><div class="service-foot"><span>Laptops</span><strong>From ₹999</strong></div></article>
+          <article class="service" data-category="laptop"><div class="service-icon">🧰</div><h3>Software support</h3><p>Basic troubleshooting, setup and performance checks.</p><div class="service-foot"><span>Laptops</span><strong>From ₹499</strong></div></article>
+        </div>
+      </section>
+
+      <section id="booking">
+        <div class="section-head">
+          <div><div class="kicker">Repair request</div><h2>Let’s get it working<br>again.</h2></div>
+          <p>Fill in the details to see a sample estimate and prepare a booking message. No payment is taken on this demo website.</p>
+        </div>
+        <div class="booking-layout">
+          <aside class="booking-aside">
+            <span class="eyebrow">Quick estimate</span>
+            <h3>Know the expected range before you request.</h3>
+            <p>Select your device and issue in the form. The sample estimate updates automatically.</p>
+            <div class="estimate"><small>Estimated sample range</small><strong id="priceRange">₹499 – ₹1,299</strong><em id="estimateLabel">Phone · Charging port check</em></div>
+            <p style="margin:17px 0 0;font-size:11px">Demo prices only. Final pricing depends on device model, parts and inspection.</p>
+          </aside>
+          <form class="form-card" id="bookingForm">
+            <div class="form-grid">
+              <div class="field"><label for="customerName">Your name</label><input id="customerName" name="customerName" placeholder="e.g. Athar" required maxlength="60"></div>
+              <div class="field"><label for="customerPhone">Phone number</label><input id="customerPhone" name="customerPhone" type="tel" placeholder="Your contact number" required pattern="[0-9+() -]{8,18}"></div>
+              <div class="field"><label for="device">Device</label><select id="device" name="device"><option value="phone">Phone</option><option value="laptop">Laptop</option></select></div>
+              <div class="field"><label for="serviceType">Repair needed</label><select id="serviceType" name="serviceType"></select></div>
+              <div class="field"><label for="preferredDate">Preferred date</label><input id="preferredDate" name="preferredDate" type="date" required></div>
+              <div class="field full"><label for="message">Tell us a little more (optional)</label><textarea id="message" name="message" placeholder="Device model or a short description of the issue..."></textarea></div>
+            </div>
+            <p class="form-note">By continuing, you’ll prepare a repair request message. This demo does not collect or store form data.</p>
+            <button class="btn btn-primary" type="submit">Prepare booking request ↗</button>
+            <div class="notice" id="notice" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </section>
+
+      <section id="how">
+        <div class="section-head">
+          <div><div class="kicker">How it works</div><h2>Three easy steps.</h2></div>
+          <p>A simple customer journey designed to make a local repair business easier to contact.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><b>01</b><h3>Choose your service</h3><p>Select your device and the issue you’re facing.</p></article>
+          <article class="step"><b>02</b><h3>Get an estimate</h3><p>See an indicative price range before sending a request.</p></article>
+          <article class="step"><b>03</b><h3>Send your request</h3><p>Prepare your details and continue through WhatsApp.</p></article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head"><div><div class="kicker">Good to know</div><h2>Frequently asked questions.</h2></div></div>
+        <div class="faq">
+          <details><summary>Are the prices final?</summary><p>No. Prices shown here are sample portfolio-demo estimates. A real repair business should replace them with verified prices and confirm the final quote after inspection.</p></details>
+          <details><summary>Do I pay online?</summary><p>No. This demo does not take payments or store customer details.</p></details>
+          <details><summary>Can I use this for my own repair shop?</summary><p>Yes. Update the business name, services, prices, contact number and location before publishing it for a real business.</p></details>
+          <details><summary>How does the booking button work?</summary><p>After you configure the WhatsApp number in the JavaScript settings, the form opens WhatsApp with a prepared message.</p></details>
+        </div>
+      </section>
+    </main>
+
+    <footer><span><strong>FixPoint</strong> · Device repair website concept</span><span>Designed as a portfolio demo by Mohd Athar</span></footer>
+  </div>
+
+  <script>
+    // Replace this with the shop's WhatsApp number: country code + number, digits only.
+    // Example format for India: 91XXXXXXXXXX
+    const WHATSAPP_NUMBER = "91XXXXXXXXXX";
+
+    const prices = {
+      phone: [
+        { value: "screen", label: "Screen repair", low: 1499, high: 3999 },
+        { value: "battery", label: "Battery replacement", low: 799, high: 1999 },
+        { value: "charging", label: "Charging port check", low: 499, high: 1299 }
+      ],
+      laptop: [
+        { value: "screen", label: "Screen repair", low: 2499, high: 6999 },
+        { value: "keyboard", label: "Keyboard replacement", low: 999, high: 2499 },
+        { value: "software", label: "Software support", low: 499, high: 1499 }
+      ]
+    };
+
+    const deviceSelect = document.getElementById("device");
+    const serviceSelect = document.getElementById("serviceType");
+    const priceRange = document.getElementById("priceRange");
+    const estimateLabel = document.getElementById("estimateLabel");
+    const notice = document.getElementById("notice");
+
+    function money(value) {
+      return "₹" + value.toLocaleString("en-IN");
+    }
+
+    function updateServices() {
+      const device = deviceSelect.value;
+      serviceSelect.innerHTML = "";
+      prices[device].forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.value;
+        option.textContent = item.label;
+        serviceSelect.appendChild(option);
+      });
+      updateEstimate();
+    }
+
+    function updateEstimate() {
+      const item = prices[deviceSelect.value].find(entry => entry.value === serviceSelect.value);
+      if (!item) return;
+      priceRange.textContent = `${money(item.low)} – ${money(item.high)}`;
+      estimateLabel.textContent = `${deviceSelect.value === "phone" ? "Phone" : "Laptop"} · ${item.label}`;
+    }
+
+    document.querySelectorAll(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        const filter = button.dataset.filter;
+        document.querySelectorAll(".service").forEach(card => {
+          card.hidden = filter !== "all" && card.dataset.category !== filter;
+        });
+      });
+    });
+
+    deviceSelect.addEventListener("change", updateServices);
+    serviceSelect.addEventListener("change", updateEstimate);
+
+    const dateInput = document.getElementById("preferredDate");
+    const today = new Date();
+    const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    dateInput.min = localToday;
+
+    document.getElementById("bookingForm").addEventListener("submit", event => {
+      event.preventDefault();
+      if (!event.currentTarget.reportValidity()) return;
+
+      const form = new FormData(event.currentTarget);
+      const item = prices[form.get("device")].find(entry => entry.value === form.get("serviceType"));
+      const deviceName = form.get("device") === "phone" ? "Phone" : "Laptop";
+      const message = [
+        "Hello FixPoint! I would like to request a repair booking.",
+        `Name: ${form.get("customerName")}`,
+        `Phone: ${form.get("customerPhone")}`,
+        `Device: ${deviceName}`,
+        `Service: ${item.label}`,
+        `Sample estimate: ${money(item.low)} – ${money(item.high)}`,
+        `Preferred date: ${form.get("preferredDate")}`,
+        `Details: ${form.get("message") || "Not provided"}`
+      ].join("\n");
+
+      notice.classList.add("show");
+      notice.textContent = "Your request is ready. This is a demo form; details are not stored.";
+
+      if (/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+        const link = document.createElement("a");
+        link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.className = "btn btn-primary";
+        link.style.marginTop = "12px";
+        link.textContent = "Continue to WhatsApp ↗";
+        notice.appendChild(document.createElement("br"));
+        notice.appendChild(link);
+      } else {
+        const preview = document.createElement("div");
+        preview.style.marginTop = "10px";
+        preview.textContent = message;
+        notice.appendChild(preview);
+        const copy = document.createElement("button");
+        copy.type = "button";
+        copy.textContent = "Copy request text";
+        copy.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(message);
+            copy.textContent = "Copied ✓";
+          } catch {
+            copy.textContent = "Select and copy the request text above";
+          }
+        });
+        notice.appendChild(copy);
+        const hint = document.createElement("p");
+        hint.style.margin = "10px 0 0";
+        hint.style.fontSize = "11px";
+        hint.textContent = "To enable WhatsApp, replace 91XXXXXXXXXX in the WHATSAPP_NUMBER setting near the bottom of this file.";
+        notice.appendChild(hint);
+      }
+    });
+
+    updateServices();
+  </script>
+</body>
+</html>
